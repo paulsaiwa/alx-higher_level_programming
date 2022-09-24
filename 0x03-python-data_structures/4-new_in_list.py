@@ -1,6 +1,9 @@
-#!/usr/bin/python3
+!/usr/bin/python3
 def new_in_list(my_list, idx, element):
-    dup = my_list[:]
-    if idx >= 0 and idx < len(dup):
-        dup[idx] = element
-    return 
+    if(my_list is not None):
+        m_list = my_list.copy()
+        if idx < 0 or idx >= len(my_list):
+            return my_list
+        else:
+            m_list[idx] = element
+            return m_list 
