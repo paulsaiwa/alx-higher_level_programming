@@ -1,5 +1,11 @@
 #!/usr/bin/python3
-"""class Square that defines a square by: (based on 0-square.py)"""
+""" Defining a class square """
+
+
 class Square:
+    """ Defining a class square """
     def __init__(self, size):
+        """ Initializing a square class
+        Args: size: size of the square
+         """
         self.__size = size
