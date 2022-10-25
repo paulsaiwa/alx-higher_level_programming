@@ -3,7 +3,6 @@
 """
 import json
 
-
 def load_from_json_file(filename):
     """Returns created object from a JSON file
     """
