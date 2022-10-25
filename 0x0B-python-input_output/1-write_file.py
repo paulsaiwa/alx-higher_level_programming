@@ -15,4 +15,3 @@ def number_of_lines(filename=""):
                 break
             lines += 1
         return lines
-
