@@ -1,29 +1,14 @@
 #!/usr/bin/python3
-"""the class Rectangle that inherits from Base"""
-
+"""rectangle
+"""
 from models.base import Base
 
 
 class Rectangle(Base):
-    """the class Rectangle that inherits from Base]
-
-    Args:
-        Base ([cls]): [inherited class]
+    """Inherits from Base
     """
-    pass
 
     def __init__(self, width, height, x=0, y=0, id=None):
-        """Call the super class with id - this super call
-        with use the logic of the __init__ of the Base class
-        Assign each argument width, height, x and y to the right attribute]
-
-        Args:
-            width ([int]): []
-            height ([int]): []
-            x (int, optional): []. Defaults to 0.
-            y (int, optional): []. Defaults to 0.
-            id ([id], optional): []. Defaults to None.
-        """
         super().__init__(id)
         self.width = width
         self.height = height
@@ -32,125 +17,101 @@ class Rectangle(Base):
 
     @property
     def width(self):
-        """width getter"""
         return self.__width
 
     @width.setter
     def width(self, value):
-        """width setter"""
-        integer_validator(self, 'width', value)
+        if type(value) != int:
+            raise TypeError("width must be an integer")
+        if value <= 0:
+            raise ValueError("width must be > 0")
         self.__width = value
 
     @property
     def height(self):
-        """height getter"""
         return self.__height
 
     @height.setter
     def height(self, value):
-        """height setter"""
-        integer_validator(self, 'height', value)
+        if type(value) != int:
+            raise TypeError("height must be an integer")
+        if value <= 0:
+            raise ValueError("height must be > 0")
         self.__height = value
 
     @property
     def x(self):
-        """x getter"""
         return self.__x
 
     @x.setter
     def x(self, value):
-        """x setter"""
-        integer_validator_0(self, 'x', value)
+        if type(value) != int:
+            raise TypeError("x must be an integer")
+        if value < 0:
+            raise ValueError("x must be >= 0")
         self.__x = value
 
     @property
     def y(self):
-        """y getter"""
         return self.__y
 
     @y.setter
     def y(self, value):
-        """y setter"""
-        integer_validator_0(self, 'y', value)
+        if type(value) != int:
+            raise TypeError("y must be an integer")
+        if value < 0:
+            raise ValueError("y must be >= 0")
         self.__y = value
 
     def area(self):
+        """Returns area of the rectangle
         """
-        Returns:
-            [int] -- [area of Rectangle]
-        """
+
         return self.__width * self.__height
 
     def display(self):
-        """prints in stdout the Rectangle instance with
-        the character # by taking care of x and y]
+        """Returns printed rectangle with '#'
+        y is newline, x is space
         """
-        print('\n' * self.__y, end='')
-        for height in range(self.__height):
-            print(' ' * self.__x + '#' * self.__width)
+
+        if self.__y != 0:
+            for newline in range(self.__y):
+                print()
+
+        for row in range(self.__height):
+            print((self.__x * " ") + (self.__width * '#'))
 
     def __str__(self):
+        """Returns formatted information display
         """
-        Returns:
-            [string] -- [the following rectangle description:
-            [Rectangle] (<id>) <x>/<y> - <width>/<height>]
-        """
-        return '[Rectangle] ({}) {}/{} - {}/{}'\
-            .format(self.id, self.__x, self.__y, self.__width, self.__height)
+
+        return "[{}] ({}) {}/{} - {}/{}".format(self.__class__.__name__,
+                                                self.id, self.__x, self.__y,
+                                                self.__width, self.__height)
 
     def update(self, *args, **kwargs):
-        """assigns a values argument to attributes"""
-        tmp = ['id', 'width', 'height', 'x', 'y']
-        if args:
-            for pos, arg in enumerate(args):
-                setattr(self, tmp[pos], arg)
+        """Updates rectangle values
+        """
+
+        if len(kwargs) != 0:
+            for k, v in kwargs.items():
+                setattr(self, k, v)
+        elif len(args) != 0:
+            try:
+                self.id = args[0]
+                self.__width = args[1]
+                self.__height = args[2]
+                self.__x = args[3]
+                self.__y = args[4]
+            except IndexError:
+                pass
         else:
-            if len(kwargs) <= 0:
-                return
-            for key, value in kwargs.items():
-                if key in tmp:
-                    setattr(self, key, value)
+            print()
 
     def to_dictionary(self):
-        """create a dictionary with the representation of the rectangle"""
-        return {
-            'id': self.id,
-            'width': self.width,
-            'height': self.height,
-            'x': self.x,
-            'y': self.y
-        }
+        """Returns dict representation
+        """
 
+        return {'x': self.__x, 'y': self.__y, 'id': self.id,
+                'height': self.__height, 'width': self.__width}
 
-def integer_validator(self, name, value):
-    """method that validates value]
-
-    Arguments:
-        name {[string]}
-        value {[int]}
-
-    Raises:
-        TypeError: [<name> must be an integer]
-        ValueError: [<name> must be > 0]
-    """
-    if type(value) is not int:
-        raise TypeError('{} must be an integer'.format(name))
-    elif value <= 0:
-        raise ValueError('{} must be > 0'.format(name))
-
-
-def integer_validator_0(self, name, value):
-    """method that validates value]
-
-    Arguments:
-        name {[string]}
-        value {[int]}
-
-    Raises:
-        TypeError: [<name> must be an integer]
-        ValueError: [<name> must be >= 0]
-    """
-    if type(value) is not int:
-        raise TypeError('{} must be an integer'.format(name))
-    elif value < 0:
-        raise ValueError('{} must be >= 0'.format(name))
